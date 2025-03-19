@@ -1,0 +1,235 @@
+package ex;
+
+import java.util.Scanner;
+import java.util.Random;
+
+//__________        .__         __________              .__   
+//\______   \_______|__|____    \______   \_____   __ __|  |  
+// |    |  _/\_  __ \  \__  \    |       _/\__  \ |  |  \  |  
+// |    |   \ |  | \/  |/ __ \_  |    |   \ / __ \|  |  /  |
+// |______  / |__|  |__(____  /  |____|_  /(____  /____/|____/
+//        \/                \/          \/      \/            
+
+// +2 ore
+
+public class Ex4 {
+    public static void main(String args[]) {
+    	Random random = new Random();
+    	Scanner reader = new Scanner(System.in);
+    	
+    	int d;
+    	System.out.println("Introduce ti dimensiunea tablei de X - 0: ");
+
+    	d = reader.nextInt();
+    	System.out.println();
+    	
+    	
+    	char [][] tabla = new char [d][d];
+    	
+    	for (int i = 0 ; i < d ; i++) {
+    		for (int j = 0 ; j < d ; j++) {
+    			tabla[i][j] = '*';
+    		}
+    	}
+    	
+    	alege(tabla, d);
+    	afisare(tabla, d);
+    	
+    	
+    }
+    
+    public static void afisare(char [][] tabla, int d) {
+    	for (int i = 0 ; i < d ; i++) {
+    		for (int j = 0 ; j < d ; j++) {
+    			System.out.print(tabla[i][j] + " ");
+    		}
+    		System.out.println();
+    	}
+    	System.out.println();
+    }
+    
+    public static void alege(char [][] tabla, int d) {
+    	Random random = new Random();
+    	
+    	int tura = 2;
+
+    	
+    	while (plina(tabla, d) == false && (castigator(tabla, d) != "X" && castigator(tabla, d) != "0")) {
+    		
+        	int l = random.nextInt(d) + 0;
+        	int c = random.nextInt(d) + 0;
+        	
+        	if (tabla[l][c] == '*') {
+        		if (tura % 2 == 0) {
+        			tabla[l][c] = 'X';
+        			afisare(tabla, d);
+        		}
+        		else {
+        			tabla[l][c] = '0';
+        			afisare(tabla, d);
+        		}
+        	
+        		tura++;
+        	}
+    	}
+    	
+    	System.out.println("\nJocul s-a incheiat!");
+		if(castigator(tabla, d) == "X") {
+			System.out.println("X a castigat!\n");
+		}
+		else if(castigator(tabla, d) == "0") {
+			System.out.println("0 a castigat!\n");
+		}
+		else {
+			System.out.println("Nimeni nu a castigat\n");
+		}
+    	
+    	
+    }
+    
+    public static boolean plina(char [][] tabla, int d) {
+    	boolean rez = true;
+    	for (int i = 0 ; i < d ; i++) {
+    		for (int j = 0 ; j < d ; j++) {
+    			if(tabla[i][j] == '*') {
+    				rez = false;
+    			}
+    		}
+    	}
+    	
+    	return rez;
+    	
+    }
+    
+    public static String castigator(char [][] tabla, int d) {
+    	
+    	int sum = 0;
+    	
+    	
+    	for (int i = 0 ; i < d ; i++) {
+    		for (int j = 0 ; j < d ; j++) {
+    			if (tabla[i][j] == 'X') {
+    				sum +=1;
+    			}
+    		}
+    		if (sum == d) {
+    			return "X";
+    		}
+    		else {
+    			sum = 0;
+    		}
+    		
+    		
+    	}
+    	
+    	sum = 0;
+    	
+    	for (int i = 0 ; i < d ; i++) {
+    		for (int j = 0 ; j < d ; j++) {
+    			if (tabla[i][j] == '0') {
+    				sum +=1;
+    			}
+    		}
+    		if (sum == d) {
+    			return "0";
+    		}
+    		else {
+    			sum = 0;
+    		}
+    		
+    	}
+    	
+    	sum = 0;
+    	
+    	for (int i = 0 ; i < d ; i++) {
+    		for (int j = 0 ; j < d ; j++) {
+    			if (tabla[j][i] == 'X') {
+    				sum +=1;
+    			}
+    		}
+    		if (sum == d) {
+    			return "X";
+    		}
+    		else {
+    			sum = 0;
+    		}
+    		
+    	}
+    	
+    	sum = 0;
+    	
+    	for (int i = 0 ; i < d ; i++) {
+    		for (int j = 0 ; j < d ; j++) {
+    			if (tabla[j][i] == '0') {
+    				sum +=1;
+    			}
+    		}
+    		if (sum == d) {
+    			return "0";
+    		}
+    		else {
+    			sum = 0;
+    		}
+    		
+    	}
+  
+    	sum = 0;
+    	
+    	for (int i = 0 ; i < d ; i++) {
+    		if (tabla[i][i] == 'X') {
+    			sum +=1;
+    		}
+    	}
+    	if (sum == d) {
+    		return "X";
+    	}
+    	else {
+			sum = 0;
+		}
+    	
+    	sum = 0;
+    	
+    	for (int i = 0 ; i < d ; i++) {
+    		if (tabla[i][i] == '0') {
+    			sum +=1;
+    		}
+    	}
+    	if (sum == d) {
+    		return "0";
+    	}
+    	else {
+			sum = 0;
+		}
+    	
+    	sum = 0;
+    	
+    	for (int i = 0 ; i < d ; i++) {
+    		if (tabla[i][d-1-i] == 'X') {
+    			sum +=1;
+    		}
+    	}
+    	if (sum == d) {
+    		return "X";
+    	}
+    	else {
+			sum = 0;
+		}
+    	
+    	sum = 0;
+    	
+    	for (int i = 0 ; i < d ; i++) {
+    		if (tabla[i][d-1-i] == '0') {
+    			sum +=1;
+    		}
+    	}
+    	if (sum == d) {
+    		return "0";
+    	}
+    	else {
+			sum = 0;
+		}
+    	
+    	
+    	return "";
+    }
+}
